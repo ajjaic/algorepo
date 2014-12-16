@@ -1,4 +1,4 @@
 algorepo
 ========
 
-An implementation of important algorithms and datastructures
+A python implementation of important algorithms and datastructures
