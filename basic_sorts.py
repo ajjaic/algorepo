@@ -26,7 +26,17 @@ def insert_sort_inplace_variation(arr):
 
     return arr
 
+#A useless algorithm.
+#Not as bad as bogosort and bozosort though
+def bubble_sort(arr):
+    arrlen = len(arr)
 
+    for i in range(arrlen-1, 0, -1):
+        for j in range(0, i):
+            if arr[j] > arr[j+1]:
+                arr[j], arr[j+1] = arr[j+1], arr[j]
+
+    return arr
 
 def sorting_test(fn):
     rndlist = produce_test_input()
@@ -47,5 +57,6 @@ def produce_test_input():
 def main():
     assert sorting_test(insert_sort_inplace)
     assert sorting_test(insert_sort_inplace_variation)
+    assert sorting_test(bubble_sort)
 
 main()
