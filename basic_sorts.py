@@ -9,6 +9,24 @@ def insert_sort_inplace(arr):
 
     return arr
 
+def insert_sort_inplace_variation(arr):
+    arrlen = len(arr)
+
+    for i in range(1, arrlen):
+        for j in range(i-1, -1, -1):
+            if arr[i] < arr[j]:
+                arr[i], arr[j] = arr[j], arr[i]
+                i = j #inner loop uses 'i' at point of
+                      #initialization. #outerloop
+                      #re-initializes 'i'
+                j -= 1
+            else:
+                break
+
+
+    return arr
+
+
 
 def sorting_test(fn):
     rndlist = produce_test_input()
@@ -27,10 +45,7 @@ def produce_test_input():
     return random.sample(xrange(100), 15)
 
 def main():
-    rndlist = produce_test_input()
-    print rndlist
-    insert_sort_inplace(rndlist)
-    print rndlist
     assert sorting_test(insert_sort_inplace)
+    assert sorting_test(insert_sort_inplace_variation)
 
 main()
