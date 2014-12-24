@@ -68,7 +68,7 @@ def selection_sort_inplace(arr):
     the last index in the sorted part of the
     list.
 
-    BIG(O): N^2
+    BIG(O):
     """
 
     arrlen = len(arr)
@@ -82,9 +82,56 @@ def selection_sort_inplace(arr):
 
     return arr
 
-def sorting_test(fn):
-    rndlist = produce_test_input()
-    rndlist = fn(rndlist)
+def quicksort_middle_pivot(arr):
+    """
+    Divide and Conquer algorithm. List broken down
+    into smaller and smaller lists and then sorted.
+    This is not inplace. Every recursive call
+    creates 2 extra lists. Middle element is used
+    as pivot
+
+    BIG(O):
+    """
+    lenarr = len(arr)
+    if lenarr <= 1:
+        return arr
+    pivot = lenarr/2
+
+    lessp = list()
+    largerp = list()
+
+    for v in range(pivot):
+        if arr[v] <= arr[pivot]:
+            lessp.append(arr[v])
+        else:
+            largerp.append(arr[v])
+
+    for v in range(pivot+1, lenarr):
+        if arr[v] <= arr[pivot]:
+            lessp.append(arr[v])
+        else:
+            largerp.append(arr[v])
+
+    sleft = quicksort_middle_pivot(lessp)
+    sright = quicksort_middle_pivot(largerp)
+
+    sleft.append(arr[pivot])
+    sleft.extend(sright)
+    return sleft
+
+def sorting_test(fn, *args):
+    """
+    This is a test function that takes a function
+    as input and calls the function with a random
+    list of numbers. Verifies that the returned
+    list is sorted.
+    """
+    import random
+    rndlist = random.sample(xrange(100), 15)
+    if args:
+        rndlist = fn(rndlist, *args)
+    else:
+        rndlist = fn(rndlist)
 
     for i in range(1, len(rndlist)):
         if rndlist[i] < rndlist[i-1]:
@@ -93,14 +140,11 @@ def sorting_test(fn):
 
     return True
 
-def produce_test_input():
-    import random
-    return random.sample(xrange(100), 15)
-
 def main():
     assert sorting_test(insert_sort_inplace)
     assert sorting_test(insert_sort_inplace_variation)
     assert sorting_test(bubble_sort_inplace)
     assert sorting_test(selection_sort_inplace)
+    assert sorting_test(quicksort_middle_pivot)
 
 main()
