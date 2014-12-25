@@ -82,6 +82,99 @@ def selection_sort_inplace(arr):
 
     return arr
 
+def pivot_partition(arr, lefti, righti, pivoti):
+    arr[righti], arr[pivoti] = arr[pivoti], arr[righti]
+
+    correct_pivoti = lefti
+    for i in range(lefti, righti):
+        if arr[i] <= arr[righti]:
+            arr[correct_pivoti], arr[i] = arr[i], arr[correct_pivoti]
+            correct_pivoti += 1
+
+    arr[correct_pivoti], arr[righti] = arr[righti], arr[correct_pivoti]
+
+    return correct_pivoti
+
+def median_element(arr, ki, lefti, righti):
+
+    while True:
+        pivoti = lefti
+        newp = pivot_partition(arr, lefti, righti, pivoti)
+        if newp == ki:
+            break
+        elif ki < newp:
+            righti = newp - 1
+        else:
+            lefti = newp + 1
+
+    return arr
+
+
+def median_sort_inplace(arr, lefti, righti):
+    #TODO: NEEDS WORK
+    import pudb; pu.db
+    if righti <= lefti:
+        return
+    ki = lefti + (righti - lefti)/2
+
+    median_element(arr, ki, lefti, righti)
+
+    median_sort_inplace(arr, lefti, lefti+ki-1)
+    median_sort_inplace(arr, lefti+ki+1, righti)
+
+
+def merge_sorted_lists(arr, l1, r1, l2, r2):
+    """
+    Given 2 sorted lists of varying lengths, it
+    merges both the list and preserve the sorting
+    order in the process
+
+    BIG(O): O(N)
+    """
+    minl = min(l1,l2)
+    maxr = max(r1, r2)
+    sortedsize = maxr - minl + 1
+    sortedarr = [0] * sortedsize
+    sortedi = 0
+
+    while l1 <= r1 and l2 <= r2:
+        if arr[l1] <= arr[l2]:
+            sortedarr[sortedi] = arr[l1]
+            l1 += 1
+            sortedi += 1
+        elif arr[l2] <= arr[l1]:
+            sortedarr[sortedi] = arr[l2]
+            l2 += 1
+            sortedi += 1
+
+    while l1 <= r1:
+        sortedarr[sortedi] = arr[l1]
+        sortedi += 1
+        l1 += 1
+
+    while l2 <= r2:
+        sortedarr[sortedi] = arr[l2]
+        sortedi += 1
+        l2 += 1
+
+    for i, j  in zip(range(minl, maxr+1), range(sortedsize)):
+        arr[i] = sortedarr[j]
+
+
+def merge_sort_inplace(arr, lefti, righti):
+    size = righti - lefti + 1
+    if size < 2:
+        return
+    half = size/2 + lefti - 1
+
+    merge_sort_inplace(arr, lefti, half)
+    merge_sort_inplace(arr, half+1, righti)
+
+    merge_sorted_lists(arr, lefti, half, half+1, righti)
+
+    return arr
+
+
 def quicksort_middle_pivot(arr):
     """
     Divide and Conquer algorithm. List broken down
@@ -119,15 +212,14 @@ def quicksort_middle_pivot(arr):
     sleft.extend(sright)
     return sleft
 
-def sorting_test(fn, *args):
+def sorting_test(fn, rndlist, *args):
     """
     This is a test function that takes a function
     as input and calls the function with a random
     list of numbers. Verifies that the returned
     list is sorted.
     """
-    import random
-    rndlist = random.sample(xrange(100), 15)
+
     if args:
         rndlist = fn(rndlist, *args)
     else:
@@ -140,11 +232,30 @@ def sorting_test(fn, *args):
 
     return True
 
+def mk_rnd_list(maxelement, totalelements):
+    import random
+    return random.sample(xrange(maxelement), totalelements)
+
 def main():
-    assert sorting_test(insert_sort_inplace)
-    assert sorting_test(insert_sort_inplace_variation)
-    assert sorting_test(bubble_sort_inplace)
-    assert sorting_test(selection_sort_inplace)
-    assert sorting_test(quicksort_middle_pivot)
+    assert sorting_test(insert_sort_inplace, mk_rnd_list(100, 15))
+    assert sorting_test(insert_sort_inplace_variation, mk_rnd_list(100, 15))
+    assert sorting_test(bubble_sort_inplace, mk_rnd_list(100, 15))
+    assert sorting_test(selection_sort_inplace, mk_rnd_list(100, 15))
+    assert sorting_test(quicksort_middle_pivot, mk_rnd_list(100, 15))
+    assert sorting_test(merge_sort_inplace, mk_rnd_list(100, 15), 0, 14)
+
+
+    ##r = mk_rnd_list(100, 15)
+    ##print r
+    ###import pudb; pu.db
+    ##print pivot_partition(r, 0, len(r)-1, len(r)/2)
+    ##print r
+
+    ##r = mk_rnd_list(100, 15)
+    ##print median_element(r, (len(r)-1)/2, 0, 14)
+
+    ##r = mk_rnd_list(100, 15)
+    ##median_sort_inplace(r, 0, 14)
+    ##print r
 
 main()
