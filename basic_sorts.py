@@ -7,7 +7,8 @@ def insert_sort_inplace(arr):
     of the list, they are put in sorted order,
     at the other end.
 
-    BIG(O):
+    RUNTIME: Best - O(n), Avg - O(n^2),
+             Worst - O(n^2)
     """
 
     arrlen = len(arr)
@@ -26,7 +27,8 @@ def insert_sort_inplace_variation(arr):
     inserted from the end of the sorted part of
     the list.
 
-    BIG(O):
+    RUNTIME: Best - O(n), Avg - O(n^2),
+             Worst - O(n^2)
     """
     arrlen = len(arr)
 
@@ -52,7 +54,8 @@ def bubble_sort_inplace(arr):
     number of elements. In each traversal,
     the largest element bubbles up to the top.
 
-    BIG(O): N^2
+    RUNTIME: Best - O(n), Avg - O(n^2),
+             Worst - O(n^2)
     """
     arrlen = len(arr)
 
@@ -70,7 +73,8 @@ def selection_sort_inplace(arr):
     the last index in the sorted part of the
     list.
 
-    BIG(O):
+    RUNTIME: Best - O(n^2), Avg - O(n^2),
+             Worst - O(n^2)
     """
 
     arrlen = len(arr)
@@ -85,6 +89,14 @@ def selection_sort_inplace(arr):
     return arr
 
 def pivot_partition(arr, lefti, righti, pivoti):
+    """
+    Partition algorithm used by median sort to split
+    items based on pivot. Left side of pivot are items
+    smaller than pivot. Right side are items greater
+    than pivot.
+
+    RUNTIME: Worst - O(n^2)
+    """
     arr[righti], arr[pivoti] = arr[pivoti], arr[righti]
 
     correct_pivoti = lefti
@@ -99,8 +111,11 @@ def pivot_partition(arr, lefti, righti, pivoti):
 
 
 def median_element(arr, ki, lefti, righti):
+    """
+    This finds the actual median element by partitioning
+    the array multiple times until median element is found
+    """
     while True:
-        #pivoti = random.choice(xrange(lefti, righti+1))
         pivoti = random.randint(lefti, righti)
         newp = pivot_partition(arr, lefti, righti, pivoti)
         if newp == ki:
@@ -114,6 +129,14 @@ def median_element(arr, ki, lefti, righti):
 
 
 def median_sort_inplace(arr, lefti, righti):
+    #TODO: Runtime needs confirmation
+    """
+    Sorts the elements by recursively finding the
+    median of the arr, their sub-arrays and so on.
+
+    RUNTIME: Best - O(n log n), Avg - O(n log n),
+             Worst - O(n^2)
+    """
     if righti <= lefti:
         return
     ki = lefti + (righti - lefti + 1)/2
@@ -131,7 +154,7 @@ def merge_sorted_lists(arr, l1, r1, l2, r2):
     merges both the list and preserve the sorting
     order in the process
 
-    BIG(O): O(N)
+    RUNTIME: O(N)
     """
     minl = min(l1,l2)
     maxr = max(r1, r2)
@@ -164,6 +187,16 @@ def merge_sorted_lists(arr, l1, r1, l2, r2):
 
 
 def merge_sort_inplace(arr, lefti, righti):
+    """
+    Sorts the array by iteratively splitting the array
+    into smaller and smaller array until, the array
+    cannot be split anymore at which point they are
+    joined together using the algorithm to merge 2
+    sorted lists. The merges take place from inside out.
+
+    RUNTIME: Best - O(n log n), Avg - O(n log n),
+             Worst - O(n log n)
+    """
     size = righti - lefti + 1
     if size < 2:
         return
@@ -185,7 +218,8 @@ def quicksort_middle_pivot(arr):
     creates 2 extra lists. Middle element is used
     as pivot
 
-    BIG(O):
+    RUNTIME: Best - O(n log n), Avg - O(n log n),
+             Worst - O(n^2)
     """
     lenarr = len(arr)
     if lenarr <= 1:
