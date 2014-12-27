@@ -1,3 +1,5 @@
+import random
+
 def insert_sort_inplace(arr):
     """
     Sort all the elements in a list in place.
@@ -95,10 +97,11 @@ def pivot_partition(arr, lefti, righti, pivoti):
 
     return correct_pivoti
 
-def median_element(arr, ki, lefti, righti):
 
+def median_element(arr, ki, lefti, righti):
     while True:
-        pivoti = lefti
+        #pivoti = random.choice(xrange(lefti, righti+1))
+        pivoti = random.randint(lefti, righti)
         newp = pivot_partition(arr, lefti, righti, pivoti)
         if newp == ki:
             break
@@ -111,17 +114,16 @@ def median_element(arr, ki, lefti, righti):
 
 
 def median_sort_inplace(arr, lefti, righti):
-    #TODO: NEEDS WORK
-    import pudb; pu.db
     if righti <= lefti:
         return
-    ki = lefti + (righti - lefti)/2
+    ki = lefti + (righti - lefti + 1)/2
 
     median_element(arr, ki, lefti, righti)
 
-    median_sort_inplace(arr, lefti, lefti+ki-1)
-    median_sort_inplace(arr, lefti+ki+1, righti)
+    median_sort_inplace(arr, lefti, ki-1)
+    median_sort_inplace(arr, ki+1, righti)
 
+    return arr
 
 def merge_sorted_lists(arr, l1, r1, l2, r2):
     """
@@ -232,30 +234,21 @@ def sorting_test(fn, rndlist, *args):
 
     return True
 
-def mk_rnd_list(maxelement, totalelements):
-    import random
-    return random.sample(xrange(maxelement), totalelements)
+def mk_rnd_ls(mn, mx, totalnums):
+    l = [0] * totalnums
+    for i in range(totalnums):
+        l[i] = random.randint(mn, mx)
+    return l
 
 def main():
-    assert sorting_test(insert_sort_inplace, mk_rnd_list(100, 15))
-    assert sorting_test(insert_sort_inplace_variation, mk_rnd_list(100, 15))
-    assert sorting_test(bubble_sort_inplace, mk_rnd_list(100, 15))
-    assert sorting_test(selection_sort_inplace, mk_rnd_list(100, 15))
-    assert sorting_test(quicksort_middle_pivot, mk_rnd_list(100, 15))
-    assert sorting_test(merge_sort_inplace, mk_rnd_list(100, 15), 0, 14)
-
-
-    ##r = mk_rnd_list(100, 15)
-    ##print r
-    ###import pudb; pu.db
-    ##print pivot_partition(r, 0, len(r)-1, len(r)/2)
-    ##print r
-
-    ##r = mk_rnd_list(100, 15)
-    ##print median_element(r, (len(r)-1)/2, 0, 14)
-
-    ##r = mk_rnd_list(100, 15)
-    ##median_sort_inplace(r, 0, 14)
-    ##print r
+    for i in range(100):
+        mn, mx, totalnums = 100, 500, 50
+        assert sorting_test(insert_sort_inplace, mk_rnd_ls(mn, mx, totalnums))
+        assert sorting_test(insert_sort_inplace_variation, mk_rnd_ls(mn, mx, totalnums))
+        assert sorting_test(bubble_sort_inplace, mk_rnd_ls(mn, mx, totalnums))
+        assert sorting_test(selection_sort_inplace, mk_rnd_ls(mn, mx, totalnums))
+        assert sorting_test(quicksort_middle_pivot, mk_rnd_ls(mn, mx, totalnums))
+        assert sorting_test(merge_sort_inplace, mk_rnd_ls(mn, mx, totalnums), 0, totalnums-1)
+        assert sorting_test(median_sort_inplace, mk_rnd_ls(mn, mx, totalnums), 0, totalnums-1)
 
 main()
