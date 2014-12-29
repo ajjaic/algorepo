@@ -249,8 +249,26 @@ def quicksort_middle_pivot(arr):
     return sleft
 
 
-def radix_sort():
-    pass
+def radix_sort(arr, index):
+
+    buckets = [[] for i in range(10)]
+
+    for v in arr:
+        val_index = int(str(v)[index])
+        buckets[val_index].append(v)
+
+    for i in range(10):
+        if len(buckets[i]) > 1:
+            buckets[i] = radix_sort(buckets[i], index+1)
+
+    l = list()
+    for b in buckets:
+        l.extend(b)
+
+    return l
+
+import pudb; pu.db
+print radix_sort([56, 12, 94, 49, 47, 31, 29, 58, 55, 44, 87, 19, 93, 42, 40], 0)
 
 def bucket_sort():
     pass
@@ -319,7 +337,7 @@ def main():
         assert sorting_test(median_sort_inplace, mk_rnd_ls(mn, mx, totalnums), 0, totalnums-1)
 
     for i in range(100):
-        counting_sort_list = mk_rnd_ls(0, 8, 20)
+        counting_sort_list = mk_rnd_ls(0, 8, 200)
         assert sorting_test(counting_sort, counting_sort_list, max(counting_sort_list))
 
-main()
+#main()
