@@ -249,7 +249,7 @@ def quicksort_middle_pivot(arr):
     return sleft
 
 
-def radix_sort(arr, index):
+def radix_sort(arr, minradix, maxradix):
     #TODO: Take another parameter that gives the max number of
     #      digits/chars for any single element in array
     """
@@ -261,16 +261,17 @@ def radix_sort(arr, index):
 
     RUNTIME: (nk)
     """
-
+    if minradix >= maxradix:
+        return arr
     buckets = [[] for i in range(10)]
 
     for v in arr:
-        val_index = int(str(v)[index])
+        val_index = int(str(v)[minradix])
         buckets[val_index].append(v)
 
     for i in range(10):
-        if len(buckets[i]) > 1:
-            buckets[i] = radix_sort(buckets[i], index+1)
+        if len(buckets[i])>1:
+            buckets[i] = radix_sort(buckets[i], minradix+1, maxradix)
 
     l = list()
     for b in buckets:
@@ -343,9 +344,11 @@ def main():
         assert sorting_test(quicksort_middle_pivot, mk_rnd_ls(mn, mx, totalnums))
         assert sorting_test(merge_sort_inplace, mk_rnd_ls(mn, mx, totalnums), 0, totalnums-1)
         assert sorting_test(median_sort_inplace, mk_rnd_ls(mn, mx, totalnums), 0, totalnums-1)
+        import pudb; pu.db
+        assert sorting_test(radix_sort, mk_rnd_ls(10, 99, 15), 0, 2)
 
     for i in range(100):
         counting_sort_list = mk_rnd_ls(0, 8, 200)
         assert sorting_test(counting_sort, counting_sort_list, max(counting_sort_list))
 
-#main()
+main()
