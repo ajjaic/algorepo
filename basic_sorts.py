@@ -250,6 +250,17 @@ def quicksort_middle_pivot(arr):
 
 
 def radix_sort(arr, index):
+    #TODO: Take another parameter that gives the max number of
+    #      digits/chars for any single element in array
+    """
+    An implementation of MSD radix sort. Sorts elements
+    based on the individual digits in the number or
+    characters in a string. The runtime depends on the
+    size of the array and the number of digits or characters
+    in the biggest number or string respectively.
+
+    RUNTIME: (nk)
+    """
 
     buckets = [[] for i in range(10)]
 
@@ -266,9 +277,6 @@ def radix_sort(arr, index):
         l.extend(b)
 
     return l
-
-import pudb; pu.db
-print radix_sort([56, 12, 94, 49, 47, 31, 29, 58, 55, 44, 87, 19, 93, 42, 40], 0)
 
 def bucket_sort():
     pass
