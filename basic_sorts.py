@@ -263,19 +263,24 @@ def radix_sort(arr, minradix, maxradix):
     """
     if minradix >= maxradix:
         return arr
-    buckets = [[] for i in range(10)]
+    buckets = dict()
+
 
     for v in arr:
         val_index = int(str(v)[minradix])
-        buckets[val_index].append(v)
+        l = buckets.get(val_index, [])
+        l.append(v)
+        buckets[val_index] = l
 
-    for i in range(10):
+    for i in buckets.iterkeys():
         if len(buckets[i])>1:
             buckets[i] = radix_sort(buckets[i], minradix+1, maxradix)
 
     l = list()
-    for b in buckets:
-        l.extend(b)
+    #for i in range(10):
+        #l.extend(buckets.get(i, []))
+    for i in sorted(buckets.keys()):
+        l.extend(buckets[i])
 
     return l
 
@@ -297,6 +302,7 @@ def sorting_test(fn, rndlist, *args):
 
     for i in range(1, len(rndlist)):
         if rndlist[i] < rndlist[i-1]:
+            print rndlist
             print "Error at Index: ", i
             return False
 
@@ -344,11 +350,12 @@ def main():
         assert sorting_test(quicksort_middle_pivot, mk_rnd_ls(mn, mx, totalnums))
         assert sorting_test(merge_sort_inplace, mk_rnd_ls(mn, mx, totalnums), 0, totalnums-1)
         assert sorting_test(median_sort_inplace, mk_rnd_ls(mn, mx, totalnums), 0, totalnums-1)
-        import pudb; pu.db
-        assert sorting_test(radix_sort, mk_rnd_ls(10, 99, 15), 0, 2)
 
     for i in range(100):
         counting_sort_list = mk_rnd_ls(0, 8, 200)
         assert sorting_test(counting_sort, counting_sort_list, max(counting_sort_list))
+
+    for i in range(100):
+        assert sorting_test(radix_sort, mk_rnd_ls(10, 99, 15), 0, 2)
 
 main()
