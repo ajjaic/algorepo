@@ -277,8 +277,9 @@ def radix_sort(arr, minradix, maxradix):
             buckets[i] = radix_sort(buckets[i], minradix+1, maxradix)
 
     l = list()
-    #for i in range(10):
-        #l.extend(buckets.get(i, []))
+    #There will always be only a maximum of 10 keys to sort.
+    #So 'k' is the number of times the keys of bucket will be sorted.
+    #'k' being the number of digits in largest number
     for i in sorted(buckets.keys()):
         l.extend(buckets[i])
 
