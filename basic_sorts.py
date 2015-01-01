@@ -288,6 +288,22 @@ def radix_sort(arr, minradix, maxradix):
 def bucket_sort():
     pass
 
+def heap_sort_arr(heap):
+    from arr_heap import heapify
+    from arr_heap import extract_max
+
+    lheap = len(heap)
+    heap = heapify(heap, lheap, cmp)
+
+    l = list()
+    while heap:
+        heap, mx = extract_max(heap, lheap)
+        lheap -= 1
+        l.append(mx)
+
+    return list(reversed(l))
+
+
 def sorting_test(fn, rndlist, *args):
     """
     This is a test function that takes a function
@@ -314,6 +330,7 @@ def mk_rnd_ls(mn, mx, totalnums):
     for i in range(totalnums):
         l[i] = random.randint(mn, mx)
     return l
+
 
 def counting_sort(arr, mx):
     """
@@ -351,6 +368,7 @@ def main():
         assert sorting_test(quicksort_middle_pivot, mk_rnd_ls(mn, mx, totalnums))
         assert sorting_test(merge_sort_inplace, mk_rnd_ls(mn, mx, totalnums), 0, totalnums-1)
         assert sorting_test(median_sort_inplace, mk_rnd_ls(mn, mx, totalnums), 0, totalnums-1)
+        assert sorting_test(heap_sort_arr, mk_rnd_ls(mn, mx, totalnums))
 
     for i in range(100):
         counting_sort_list = mk_rnd_ls(0, 8, 200)
