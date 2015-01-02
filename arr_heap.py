@@ -1,7 +1,7 @@
 """
 The heap datastructure implemented as an Array/List
 """
-
+#TODO: Doc strings required
 def heapify(heap, hlen, cmpfn):
     def hh(heap, pi, halfwayi, maxi, cmpfn):
         l = (2*pi)+1
@@ -49,3 +49,10 @@ def extract_max(heap, lheap):
         heap = heapify(heap, lheap, cmp)
     return heap, mx
 
+def heap_depth(heap, maxi, i):
+    if i>maxi:
+        return 0
+    left_sub_tree = 1 + heap_depth(heap, maxi, (2*i)+1)
+    right_sub_tree = 1 + heap_depth(heap, maxi, (2*i)+2)
+
+    return max(left_sub_tree, right_sub_tree)
