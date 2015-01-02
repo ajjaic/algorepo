@@ -3,7 +3,7 @@ The heap datastructure implemented as an Array/List
 """
 
 def heapify(heap, hlen, cmpfn):
-    def hh(heap, pi, maxi, cmpfn):
+    def hh(heap, pi, halfwayi, maxi, cmpfn):
         l = (2*pi)+1
         r = (2*pi)+2
 
@@ -13,13 +13,14 @@ def heapify(heap, hlen, cmpfn):
 
         if cmpfn(heap[mx], heap[pi]) == 1:
             heap[pi], heap[mx] = heap[mx], heap[pi]
-            hh(heap, mx, maxi, cmpfn)
+            if mx <= halfwayi:
+                hh(heap, mx, halfwayi, maxi, cmpfn)
 
     maxi = hlen - 1
-    pi = maxi/2
+    halfwayi = maxi/2
 
-    for i in range(pi, -1, -1):
-        hh(heap, i, maxi, cmpfn)
+    for i in range(halfwayi, -1, -1):
+        hh(heap, i, halfwayi, maxi, cmpfn)
 
     return heap
 

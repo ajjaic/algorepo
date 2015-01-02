@@ -286,6 +286,11 @@ def radix_sort(arr, minradix, maxradix):
     return l
 
 def bucket_sort():
+    #TODO:
+    pass
+
+def quicksort_random_pivot():
+    #TODO:
     pass
 
 def heap_sort_arr(heap):
@@ -303,6 +308,30 @@ def heap_sort_arr(heap):
 
     return list(reversed(l))
 
+def counting_sort(arr, mx):
+    """
+    Used for sorting a list of elements N where
+    each element is in the range [0, k). Counting
+    sort is a good algorithm in situations where
+    N is much greater than k.
+
+    RUNTIME: Best - O(n), Avg - O(n), Worst - O(n)
+    """
+    mx += 1 #This is to compensate for the fact that counting sort
+            #can only sort from [0, k).
+    s = [0] * mx
+
+    for v in arr:
+        s[v] += 1
+
+    idx = 0
+    for i in range(mx):
+        while s[i] > 0:
+            arr[idx] = i
+            idx += 1
+            s[i] -= 1
+
+    return arr
 
 def sorting_test(fn, rndlist, *args):
     """
@@ -332,49 +361,3 @@ def mk_rnd_ls(mn, mx, totalnums):
     return l
 
 
-def counting_sort(arr, mx):
-    """
-    Used for sorting a list of elements N where
-    each element is in the range [0, k). Counting
-    sort is a good algorithm in situations where
-    N is much greater than k.
-
-    RUNTIME: Best - O(n), Avg - O(n), Worst - O(n)
-    """
-    mx += 1 #This is to compensate for the fact that counting sort
-            #can only sort from [0, k).
-    s = [0] * mx
-
-    for v in arr:
-        s[v] += 1
-
-    idx = 0
-    for i in range(mx):
-        while s[i] > 0:
-            arr[idx] = i
-            idx += 1
-            s[i] -= 1
-
-    return arr
-
-
-def main():
-    for i in range(100):
-        mn, mx, totalnums = 100, 500, 50
-        assert sorting_test(insert_sort_inplace, mk_rnd_ls(mn, mx, totalnums))
-        assert sorting_test(insert_sort_inplace_variation, mk_rnd_ls(mn, mx, totalnums))
-        assert sorting_test(bubble_sort_inplace, mk_rnd_ls(mn, mx, totalnums))
-        assert sorting_test(selection_sort_inplace, mk_rnd_ls(mn, mx, totalnums))
-        assert sorting_test(quicksort_middle_pivot, mk_rnd_ls(mn, mx, totalnums))
-        assert sorting_test(merge_sort_inplace, mk_rnd_ls(mn, mx, totalnums), 0, totalnums-1)
-        assert sorting_test(median_sort_inplace, mk_rnd_ls(mn, mx, totalnums), 0, totalnums-1)
-        assert sorting_test(heap_sort_arr, mk_rnd_ls(mn, mx, totalnums))
-
-    for i in range(100):
-        counting_sort_list = mk_rnd_ls(0, 8, 200)
-        assert sorting_test(counting_sort, counting_sort_list, max(counting_sort_list))
-
-    for i in range(100):
-        assert sorting_test(radix_sort, mk_rnd_ls(10, 99, 15), 0, 2)
-
-main()
