@@ -2,6 +2,7 @@
 The heap datastructure implemented as an Array/List
 """
 #TODO: Doc strings required
+#TODO: Refactor into class
 def heapify(heap, hlen, cmpfn):
     def hh(heap, pi, halfwayi, maxi, cmpfn):
         l = (2*pi)+1
