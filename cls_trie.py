@@ -4,13 +4,6 @@ class TrieNode(object):
         self.trie = dict()
         self.terminalvalue = terminalvalue
 
-class TrieRootNode(object):
-    def __init__(self):
-        self.rootnode = dict()
-
-    def isEmpty(self):
-        pass
-
 class Trie(object):
     def __init__(self):
         self.rootnode = dict()
@@ -27,21 +20,58 @@ class Trie(object):
         temp[lk] = TrieNode(lk, None)
         temp[lk].terminalvalue = True
 
-    def print_trie(self):
-        def recprint(temp, word='', words=[]):
-            for c in temp.keys():
+    def has_word(self, key):
+        temp = self.rootnode
+        tempNode = None
+
+        for c in key:
+            if not temp.has_key(c):
+                return None
+
+            tempNode = temp[c]
+            temp = tempNode.trie
+
+        return tempNode.terminalvalue
+
+    def starts_with(self, partialkey):
+        words = list()
+        temp = self.rootnode
+        tempNode = None
+
+        for c in partialkey:
+            if not temp.has_key(c):
+                return None
+            tempNode = temp[c]
+            temp = tempNode.trie
+
+        return self.retrieve_words(tempNode)
+
+
+    def retrieve_words(self, root=None):
+        temp = self.rootnode if not root else root.trie
+
+        def recurse_trie(t, word=''):
+            temp = None
+            words = list()
+
+            for c in t.keys():
                 word += c
-                if temp[c].terminalvalue:
+                temp = t[c]
+                if temp.terminalvalue:
                     words.append(word)
-                word = recprint(temp[c].trie, word, words)
 
-            if word:
-                return word[:-1]
-            else:
-                return words
+                word, wordsr = recurse_trie(temp.trie, word)
+                words = words + wordsr
+                word = word[:-1]
 
-        print recprint(self.rootnode)
+            return word, words
 
+        _, words = recurse_trie(temp)
+
+        return words
+
+    def print_trie(self):
+        print self.retrieve_words()
 
 
 
@@ -49,10 +79,7 @@ class Trie(object):
 t = Trie()
 t.insert_key('dom')
 t.insert_key('door')
-#import pudb; pu.db
+t.has_word("door")
+import pudb; pu.db
+t.starts_with("do")
 t.print_trie()
-
-    #has_key
-    #retrieve_key
-    #start_with_prefix
-
