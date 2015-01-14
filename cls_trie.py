@@ -73,13 +73,11 @@ class Trie(object):
     def print_trie(self):
         print self.retrieve_words()
 
-
-
-
-t = Trie()
-t.insert_key('dom')
-t.insert_key('door')
-t.has_word("door")
-import pudb; pu.db
-t.starts_with("do")
-t.print_trie()
+def test():
+    t = Trie()
+    t.insert_key('dom')
+    t.insert_key('door')
+    t.has_word("door")
+    import pudb; pu.db
+    t.starts_with("do")
+    t.print_trie()

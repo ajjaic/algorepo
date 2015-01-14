@@ -47,7 +47,7 @@ def insert_sort_inplace_variation(arr):
     return arr
 
 #A useless algorithm.
-#Not as bad as bogosort and bozosort though
+#Not as bad as bogosort, bozosort.
 def bubble_sort_inplace(arr):
     """
     Traverse the list as many times as the
@@ -66,6 +66,7 @@ def bubble_sort_inplace(arr):
 
     return arr
 
+#Utterly useless
 def selection_sort_inplace(arr):
     """
     Every iteration through the list, find
