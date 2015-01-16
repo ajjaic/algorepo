@@ -1,0 +1,14 @@
+CHANGELOG.txt
+LICENSE.txt
+MANIFEST.in
+README.rst
+setup.cfg
+setup.py
+algorepo/__init__.py
+algorepo/basicSorts.py
+algorepo.egg-info/PKG-INFO
+algorepo.egg-info/SOURCES.txt
+algorepo.egg-info/dependency_links.txt
+algorepo.egg-info/entry_points.txt
+algorepo.egg-info/not-zip-safe
+algorepo.egg-info/top_level.txt
