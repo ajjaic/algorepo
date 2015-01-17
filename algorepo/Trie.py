@@ -80,6 +80,5 @@ def test():
     t.insert_key('dom')
     t.insert_key('door')
     t.has_word("door")
-    import pudb; pu.db
     t.starts_with("do")
     t.print_trie()

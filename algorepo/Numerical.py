@@ -129,29 +129,29 @@ def randomly_rotated_sorted_largest(l):
     else:
         return randomly_rotated_sorted_largest(l[:mid])
 
-def randomly_rotated_sorted_largest_test(l):
-    r = random.randrange(len(l))
-    nl = l[r:] + l[:r]
-    assert l[-1] == randomly_rotated_sorted_largest(nl)
+#def randomly_rotated_sorted_largest_test(l):
+    #r = random.randrange(len(l))
+    #nl = l[r:] + l[:r]
+    #assert l[-1] == randomly_rotated_sorted_largest(nl)
 
-def fib_test(l):
-    for i in range(2, len(l)):
-        assert l[i] == (l[i-1] + l[i-2])
-
-
-def permutate_test(p):
-    l = map(lambda x:''.join(x), list(itertools.permutations(p)))
-    q = permutate(p)
-
-    for v in l:
-        assert v in q
+#def fib_test(l):
+    #for i in range(2, len(l)):
+        #assert l[i] == (l[i-1] + l[i-2])
 
 
-def main():
-    randomly_rotated_sorted_largest_test(list(xrange(1, 100)))
-    fib_test(fib_memoized(100))
-    fib_test(fib_memoized_variation(100))
-    fib_test(fib_unmemoized_naive(30))
-    permutate_test("12345") main()
+#def permutate_test(p):
+    #l = map(lambda x:''.join(x), list(itertools.permutations(p)))
+    #q = permutate(p)
 
-main()
+    #for v in l:
+        #assert v in q
+
+
+#def main():
+    #randomly_rotated_sorted_largest_test(list(xrange(1, 100)))
+    #fib_test(fib_memoized(100))
+    #fib_test(fib_memoized_variation(100))
+    #fib_test(fib_unmemoized_naive(30))
+    #permutate_test("12345")
+
+#main()

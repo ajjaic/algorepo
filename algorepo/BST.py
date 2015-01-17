@@ -36,10 +36,6 @@ class Bst(object):
 
 def testing():
     s = Bst(cmp)
-    import pudb; pu.db
     s.insert_element(20)
     s.insert_element(19)
     pass
-
-testing()
-
