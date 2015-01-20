@@ -3,6 +3,7 @@ Basic sorting algorithms and their variations
 """
 
 import random
+from Numerical import merge_sorted_lists
 
 def insert_sort_inplace(arr):
     """
@@ -151,42 +152,7 @@ def median_sort_inplace(arr, lefti, righti):
 
     return arr
 
-def merge_sorted_lists(arr, l1, r1, l2, r2):
-    """
-    Given 2 sorted lists of varying lengths, it
-    merges both the list and preserve the sorting
-    order in the process
 
-    RUNTIME:
-    """
-    minl = min(l1,l2)
-    maxr = max(r1, r2)
-    sortedsize = maxr - minl + 1
-    sortedarr = [0] * sortedsize
-    sortedi = 0
-
-    while l1 <= r1 and l2 <= r2:
-        if arr[l1] <= arr[l2]:
-            sortedarr[sortedi] = arr[l1]
-            l1 += 1
-            sortedi += 1
-        elif arr[l2] <= arr[l1]:
-            sortedarr[sortedi] = arr[l2]
-            l2 += 1
-            sortedi += 1
-
-    while l1 <= r1:
-        sortedarr[sortedi] = arr[l1]
-        sortedi += 1
-        l1 += 1
-
-    while l2 <= r2:
-        sortedarr[sortedi] = arr[l2]
-        sortedi += 1
-        l2 += 1
-
-    for i, j  in zip(range(minl, maxr+1), range(sortedsize)):
-        arr[i] = sortedarr[j]
 
 
 def merge_sort_inplace(arr, lefti, righti):

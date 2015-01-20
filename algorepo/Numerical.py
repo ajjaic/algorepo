@@ -1,9 +1,7 @@
 """
 Numerical algorithms and their implementation
 """
-import itertools
-import timeit
-import random
+#import timeit
 
 def fib_memoized(n):
     """
@@ -67,21 +65,21 @@ def fib_unmemoized_naive(n):
         l.append(v)
     return l
 
-def fib_timer():
-    def wrapper(f, *args, **kwargs):
-        def wrapped():
-            return f(*args, **kwargs)
-        return wrapped
+#def fib_timer():
+    #def wrapper(f, *args, **kwargs):
+        #def wrapped():
+            #return f(*args, **kwargs)
+        #return wrapped
 
-    fib_wrap_1 = wrapper(fib_memoized, 100)
-    fib_wrap_2 = wrapper(fib_memoized_variation, 100)
-    fib_wrap_3 = wrapper(fib_unmemoized_naive, 25)
+    #fib_wrap_1 = wrapper(fib_memoized, 100)
+    #fib_wrap_2 = wrapper(fib_memoized_variation, 100)
+    #fib_wrap_3 = wrapper(fib_unmemoized_naive, 25)
 
-    f = 'fib_wrap_'
-    for i in range(1,4):
-        f += str(i)
-        print timeit.timeit(eval(f), number=100)
-        f = f[:-1]
+    #f = 'fib_wrap_'
+    #for i in range(1,4):
+        #f += str(i)
+        #print timeit.timeit(eval(f), number=100)
+        #f = f[:-1]
 
 def permutate(s):
     """
@@ -129,29 +127,74 @@ def randomly_rotated_sorted_largest(l):
     else:
         return randomly_rotated_sorted_largest(l[:mid])
 
-#def randomly_rotated_sorted_largest_test(l):
-    #r = random.randrange(len(l))
-    #nl = l[r:] + l[:r]
-    #assert l[-1] == randomly_rotated_sorted_largest(nl)
+def merge_sorted_lists_inplace(arr, (left_l, left_r), (right_l, right_r)):
+    templ = [arr[right_l]]
+    right_l += 1
 
-#def fib_test(l):
-    #for i in range(2, len(l)):
-        #assert l[i] == (l[i-1] + l[i-2])
+    while left_l <= left_r and right_l <= right_r:
+        _, i = min((templ[0], 't'), (arr[left_l], 'l'), (arr[right_l], 'r'))
 
+        if i == 'l':
+            left_l += 1
+        elif i == 't':
+            if arr[left_l] < arr[right_l]:
+                templ.append(arr[left_l])
+                arr[left_l] = templ[0]
+                templ = templ[1:]
+                left_l += 1
+            else:
+                templ.append(arr[right_l])
+                right_l += 1
+        else:
+            templ.append(arr[left_l])
+            arr[left_l] = arr[right_l]
+            right_l += 1
 
-#def permutate_test(p):
-    #l = map(lambda x:''.join(x), list(itertools.permutations(p)))
-    #q = permutate(p)
+    m = right_l - (left_r - left_l) - 1
+    for i in range(left_l, left_r+1):
+        arr[m] = arr[i]
+        m += 1
 
-    #for v in l:
-        #assert v in q
+    for i,j in zip(range(left_l, right_l), range(len(templ))):
+        arr[i] = templ[j]
 
+    return arr
 
-#def main():
-    #randomly_rotated_sorted_largest_test(list(xrange(1, 100)))
-    #fib_test(fib_memoized(100))
-    #fib_test(fib_memoized_variation(100))
-    #fib_test(fib_unmemoized_naive(30))
-    #permutate_test("12345")
+def merge_sorted_lists(arr, l1, r1, l2, r2):
+    """
+    Given a list and a pair of indices delimiting 2 sections
+    of the list that are sorted, this function merges both
+    the sections into 1 sorted section.
 
-#main()
+    RUNTIME:
+    """
+    minl = min(l1,l2)
+    maxr = max(r1, r2)
+    sortedsize = maxr - minl + 1
+    sortedarr = [0] * sortedsize
+    sortedi = 0
+
+    while l1 <= r1 and l2 <= r2:
+        if arr[l1] <= arr[l2]:
+            sortedarr[sortedi] = arr[l1]
+            l1 += 1
+            sortedi += 1
+        elif arr[l2] <= arr[l1]:
+            sortedarr[sortedi] = arr[l2]
+            l2 += 1
+            sortedi += 1
+
+    while l1 <= r1:
+        sortedarr[sortedi] = arr[l1]
+        sortedi += 1
+        l1 += 1
+
+    while l2 <= r2:
+        sortedarr[sortedi] = arr[l2]
+        sortedi += 1
+        l2 += 1
+
+    for i, j  in zip(range(minl, maxr+1), range(sortedsize)):
+        arr[i] = sortedarr[j]
+
+    return arr

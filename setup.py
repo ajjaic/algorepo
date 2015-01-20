@@ -16,7 +16,7 @@ from setuptools.command.test import test as TestCommand
 class PyTest(TestCommand):
     def finalize_options(self):
         TestCommand.finalize_options(self)
-        self.test_args = []
+        self.test_args = ["-v", "-s"]
         self.test_suite = True
 
     def run_tests(self):
@@ -44,12 +44,12 @@ setup(name="algorepo",
       zip_safe=False,
       tests_require=['pytest'],
       cmdclass={'test': PyTest},
-      
-      # TODO: List of packages that this one depends upon:   
+
+      # TODO: List of packages that this one depends upon:
       install_requires=[],
       # TODO: List executable scripts, provided by the package (this is just an example)
       entry_points={
-        'console_scripts': 
+        'console_scripts':
             ['algorepo=algorepo:main']
       }
 )
