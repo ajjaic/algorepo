@@ -1,7 +1,6 @@
 """
 Numerical algorithms and their implementation
 """
-#import timeit
 
 def fib_memoized(n):
     """
@@ -65,22 +64,6 @@ def fib_unmemoized_naive(n):
         l.append(v)
     return l
 
-#def fib_timer():
-    #def wrapper(f, *args, **kwargs):
-        #def wrapped():
-            #return f(*args, **kwargs)
-        #return wrapped
-
-    #fib_wrap_1 = wrapper(fib_memoized, 100)
-    #fib_wrap_2 = wrapper(fib_memoized_variation, 100)
-    #fib_wrap_3 = wrapper(fib_unmemoized_naive, 25)
-
-    #f = 'fib_wrap_'
-    #for i in range(1,4):
-        #f += str(i)
-        #print timeit.timeit(eval(f), number=100)
-        #f = f[:-1]
-
 def permutate(s):
     """
     Naive implementation of permutation algorithm to
@@ -119,13 +102,10 @@ def randomly_rotated_sorted_largest(l):
     midl = mid - 1
     midr = mid + 1
 
-    if l[mid] > l[midl] and l[mid] > l[midr]:
-        return l[mid]
-
-    if l[-1] < l[mid]:
+    if l[mid] > l[-1]:
         return randomly_rotated_sorted_largest(l[mid:])
     else:
-        return randomly_rotated_sorted_largest(l[:mid])
+        return randomly_rotated_sorted_largest(l[:(mid+1)])
 
 def merge_sorted_lists_inplace(arr, (left_l, left_r), (right_l, right_r)):
     templ = [arr[right_l]]

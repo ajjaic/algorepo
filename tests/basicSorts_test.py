@@ -9,6 +9,7 @@ Copyright 2015, Ajjai
 Licensed under MIT
 '''
 import pytest
+import itertools
 import random
 
 from algorepo.basicSorts import (insert_sort_inplace,
@@ -29,33 +30,33 @@ from algorepo.Numerical import (merge_sorted_lists_inplace,
                                 fib_unmemoized_naive,
                                 permutate,
                                 randomly_rotated_sorted_largest)
-#class Test_basicSorts:
+class Test_basicSorts:
 
-    #@pytest.fixture
-    #def numlist(self):
-        #l = list(range(1000))
-        #random.shuffle(l)
-        #return l
+    @pytest.fixture
+    def numlist(self):
+        l = list(range(1000))
+        random.shuffle(l)
+        return l
 
-    #def test_insert_sort_inplace(self, numlist):
-        #a = numlist[:]
-        #assert sorted(a) == insert_sort_inplace(numlist)
+    def test_insert_sort_inplace(self, numlist):
+        a = numlist[:]
+        assert sorted(a) == insert_sort_inplace(numlist)
 
-    #def test_insert_sort_inplace_variation(self, numlist):
-        #a = numlist[:]
-        #assert sorted(a) == insert_sort_inplace_variation(numlist)
+    def test_insert_sort_inplace_variation(self, numlist):
+        a = numlist[:]
+        assert sorted(a) == insert_sort_inplace_variation(numlist)
 
-    #def test_bubble_sort_inplace(self, numlist):
-        #a = numlist[:]
-        #assert sorted(a) == bubble_sort_inplace(numlist)
+    def test_bubble_sort_inplace(self, numlist):
+        a = numlist[:]
+        assert sorted(a) == bubble_sort_inplace(numlist)
 
-    #def test_selection_sort_inplace(self, numlist):
-        #a = numlist[:]
-        #assert sorted(a) == selection_sort_inplace(numlist)
+    def test_selection_sort_inplace(self, numlist):
+        a = numlist[:]
+        assert sorted(a) == selection_sort_inplace(numlist)
 
-    #def test_quicksort_middle_pivot(self, numlist):
-        #a = numlist[:]
-        #assert sorted(a) == quicksort_middle_pivot(numlist)
+    def test_quicksort_middle_pivot(self, numlist):
+        a = numlist[:]
+        assert sorted(a) == quicksort_middle_pivot(numlist)
 
 
 class Test_Numerical:
@@ -81,6 +82,13 @@ class Test_Numerical:
             return m
         return wrapper
 
+    @pytest.fixture
+    def rnd_str(self):
+        n = random.randint(1, 9)
+        rnd_str = random.sample("abcdefghijklmnopqrstuvwxyz123456789", n)
+        rnd_str = ''.join(rnd_str)
+        return rnd_str
+
     def test_merge_sorted_lists(self, mergelist):
         l, (ll, lr), (rl, rr) = mergelist
         assert sorted(l) == merge_sorted_lists(l, ll, lr, rl, rr)
@@ -105,14 +113,16 @@ class Test_Numerical:
         l = fib_memoized_variation(n)
         assert fib_helper(l)
 
+    def test_permutate(self, rnd_str):
+        l = map(lambda x:''.join(x), list(itertools.permutations(rnd_str)))
+        q = permutate(rnd_str)
+        for v in l:
+            assert v in q
+
     def test_fib_unmemoized_naive(self, fib_helper):
+        #For values of n greater than 25 the runtime
+        #takes exponentially longer and longer.
         n = random.randint(5, 25)
         l = fib_unmemoized_naive(n)
         assert fib_helper(l)
 
-    #def test_permutate(p):
-        #l = map(lambda x:''.join(x), list(itertools.permutations(p)))
-        #q = permutate(p)
-
-        #for v in l:
-            #assert v in q
