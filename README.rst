@@ -55,6 +55,6 @@ Contribution
 If you would like to contribute, here are a couple of ways you can::
 
     >> Add new algorithms for performing different kinds of tasks
-    >> Modify existing algorithms if there is a better way to do it
+    >> Modify existing algorithms if they can be improved in any way.
     >> Fill in the runtimes for those algorithms that do not have it filled in already
     >> Add better comments so as to document what the algorithm is doing

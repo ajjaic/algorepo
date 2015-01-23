@@ -8,6 +8,9 @@ def fib_memoized(n):
     memoizes the prerequisites for a given 'n'. For
     instance, calculating fib_memoized(4), memoizes,
     fib_memoized(3), fib_memoized(2) and fib_memoized(1)
+    'n' cannot be greater than a certain limit, since beyond a
+    certain value of 'n', this function reaches python's stack
+    size limit.
 
     RUNTIME:
     """
@@ -16,8 +19,9 @@ def fib_memoized(n):
             return l, l[n]
         l, s1 = fib_d(n-1, l)
         l, s2 = fib_d(n-2, l)
-        l.append(s1+s2)
-        return l, s1+s2
+        t = s1+s2
+        l.append(t)
+        return l, t
 
     l, _ = fib_d(n)
     return l
@@ -30,6 +34,9 @@ def fib_memoized_variation(n):
     and fib_memoized(1). The difference in this implementation
     and 'fib_memoized' is only in the re-ordering of statements
     to write it succinctly. No significant difference in runtime.
+    'n' cannot be greater than a certain limit, since beyond a
+    certain value of 'n', this function reaches python's stack
+    size limit.
 
     RUNTIME:
     """
@@ -40,6 +47,26 @@ def fib_memoized_variation(n):
         return l
 
     return fib_d(n)
+
+
+def fib_iterative(n):
+    """
+    This is an iterative version of the fibonacci algorithm. And the
+    simplest. A list is initialized with some starting values in the
+    fibonacci series. The subsequent values are calculated as the sum
+    of the values in the previous 2 indexes. This version, can calculate
+    the series without any problems of reaching python's stack depth limit.
+
+    RUNTIME:
+    """
+    l, i = [0, 1], 2
+    n -= 2
+    while n > 0:
+        l.append(l[i-1]+l[i-2])
+        i += 1
+        n -= 1
+
+    return l
 
 def fib_unmemoized_naive(n):
     """

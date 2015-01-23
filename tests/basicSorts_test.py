@@ -27,6 +27,7 @@ from algorepo.Numerical import (merge_sorted_lists_inplace,
                                 merge_sorted_lists,
                                 fib_memoized,
                                 fib_memoized_variation,
+                                fib_iterative,
                                 fib_unmemoized_naive,
                                 permutate,
                                 randomly_rotated_sorted_largest)
@@ -63,8 +64,8 @@ class Test_Numerical:
 
     @pytest.fixture
     def mergelist(self):
-        l = sorted(random.sample(xrange(1000), random.randint(5, 15)))
-        r = sorted(random.sample(xrange(700, 1000), random.randint(5,15)))
+        l = sorted(random.sample(xrange(1000), random.randint(5, 150)))
+        r = sorted(random.sample(xrange(700, 1000), random.randint(5,150)))
         lenl, lenr = len(l), len(r)
         lrange = 0, lenl-1
         rrange = lenl, lenl+lenr-1
@@ -113,11 +114,10 @@ class Test_Numerical:
         l = fib_memoized_variation(n)
         assert fib_helper(l)
 
-    def test_permutate(self, rnd_str):
-        l = map(lambda x:''.join(x), list(itertools.permutations(rnd_str)))
-        q = permutate(rnd_str)
-        for v in l:
-            assert v in q
+    def test_fib_iterative(self, fib_helper):
+        n = random.randint(100, 200)
+        l = fib_iterative(n)
+        assert fib_helper(l)
 
     def test_fib_unmemoized_naive(self, fib_helper):
         #For values of n greater than 25 the runtime
@@ -126,3 +126,8 @@ class Test_Numerical:
         l = fib_unmemoized_naive(n)
         assert fib_helper(l)
 
+    def test_permutate(self, rnd_str):
+        l = map(lambda x:''.join(x), list(itertools.permutations(rnd_str)))
+        q = permutate(rnd_str)
+        for v in l:
+            assert v in q
