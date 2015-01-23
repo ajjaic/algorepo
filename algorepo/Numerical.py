@@ -135,6 +135,17 @@ def randomly_rotated_sorted_largest(l):
         return randomly_rotated_sorted_largest(l[:(mid+1)])
 
 def merge_sorted_lists_inplace(arr, (left_l, left_r), (right_l, right_r)):
+    """
+    Given a list and a pair of indices delimiting 2 sections
+    of the list that are sorted, this function merges both
+    the sections into 1 sorted section. The difference
+    between this one and 'merge_sorted_lists' is that, in
+    'merge_sorted_lists', a new temporary list is used for
+    merging both the lists. Whereas in this one, no new
+    temporary list is used for placing the final sorted list.
+
+    RUNTIME:
+    """
     templ = [arr[right_l]]
     right_l += 1
 
@@ -171,7 +182,9 @@ def merge_sorted_lists(arr, l1, r1, l2, r2):
     """
     Given a list and a pair of indices delimiting 2 sections
     of the list that are sorted, this function merges both
-    the sections into 1 sorted section.
+    the sections into 1 sorted section. This one makes use of
+    a temporary list that is the size of both the sublists
+    combined.
 
     RUNTIME:
     """

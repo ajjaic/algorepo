@@ -127,7 +127,10 @@ class Test_Numerical:
         assert fib_helper(l)
 
     def test_permutate(self, rnd_str):
-        l = map(lambda x:''.join(x), list(itertools.permutations(rnd_str)))
+        m = dict()
+        m.update(map(lambda x:(''.join(x), True), itertools.permutations(rnd_str)))
         q = permutate(rnd_str)
-        for v in l:
-            assert v in q
+        if len(m) != len(q):
+            assert False
+        for v in q:
+            assert m[v]
