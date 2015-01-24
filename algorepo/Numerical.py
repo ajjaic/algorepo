@@ -224,8 +224,47 @@ def str_rev_recursive(s):
     Reversing a string recursively. As long as 's' is not too long,
     this function will reverse a given string. If 's' is too long,
     then this function might reach the maximum stack depth and crash.
+
+    RUNTIME:
     """
     if len(s) == 1:
         return s
     else:
-        return str_rev(s[1:]) + s[0]
+        return str_rev_recursive(s[1:]) + s[0]
+
+def str_rev_inplace(s, start, end):
+    """
+    Reversing a string iteratively. This version does not have the stack
+    depth limit problem like the recursive version.
+
+    RUNTIME:
+    """
+    if (end - start) == 0:
+        return s
+
+    while start < end:
+        s[start], s[end] = s[end], s[start]
+        start += 1
+        end -= 1
+
+def space_delimited_sentence_rev_inplace(st):
+    """
+    Reversing a the words in a string. This is an inplace implementation.
+    The way it works is that, it reverses the entire sentence and then
+    reverses the individual words in the sentence. Reversing the words,
+    twice in the sentence, gets back the original word.
+
+    RUNTIME:
+    """
+    l = map(lambda x:x, st)
+    lenl, start = len(l), 0
+    str_rev_inplace(l, 0, lenl-1)
+    for v in range(lenl):
+        if l[v] == ' ':
+            str_rev_inplace(l, start, v-1)
+            start = v + 1
+    else:
+            str_rev_inplace(l, start, v)
+
+    return ''.join(l)
+
