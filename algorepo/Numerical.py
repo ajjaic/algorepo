@@ -218,3 +218,14 @@ def merge_sorted_lists(arr, l1, r1, l2, r2):
         arr[i] = sortedarr[j]
 
     return arr
+
+def str_rev_recursive(s):
+    """
+    Reversing a string recursively. As long as 's' is not too long,
+    this function will reverse a given string. If 's' is too long,
+    then this function might reach the maximum stack depth and crash.
+    """
+    if len(s) == 1:
+        return s
+    else:
+        return str_rev(s[1:]) + s[0]
