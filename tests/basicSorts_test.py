@@ -11,6 +11,7 @@ Licensed under MIT
 import pytest
 import itertools
 import random
+import string
 
 from algorepo.basicSorts import (insert_sort_inplace,
                                     insert_sort_inplace_variation,
@@ -28,7 +29,8 @@ from algorepo.Numerical import (merge_sorted_lists,
                                 permutate,
                                 str_rev_recursive,
                                 str_rev_inplace,
-                                space_delimited_sentence_rev_inplace)
+                                space_delimited_sentence_rev_inplace,
+                                char_at_index_encoded_str)
 
 class Test_basicSorts:
 
@@ -155,6 +157,24 @@ class Test_Numerical:
     def test_space_delimited_sentence_rev_inplace(self, rnd_sen):
         t = ' '.join(reversed(rnd_sen[:].split(' ')))
         assert space_delimited_sentence_rev_inplace(rnd_sen) == t
+
+    def test_char_at_index_encoded_str(self):
+        r = (1,9)
+        input_str = ''
+        s = ''
+
+        #for i in range(random.randint(*r)):
+        #import pudb; pu.db
+        for i in range(2):
+            ws = ''.join(random.sample(string.ascii_letters, random.randint(*r)))
+            n = random.randint(*r)
+            input_str += ws + str(n)
+            s += ws * n
+
+        n = random.randrange(0, len(s))
+        if not char_at_index_encoded_str(input_str, n) == s[n]:
+            import pudb; pu.db
+            char_at_index_encoded_str(input_str, n)
 
 
 

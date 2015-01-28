@@ -268,3 +268,30 @@ def space_delimited_sentence_rev_inplace(st):
 
     return ''.join(l)
 
+def char_at_index_encoded_str(s, index):
+    """
+    Given an encoded string find the character at a certain index
+    without decoding it. For example if the string is "a2bc3d4",
+    then the decoded string is "aabcbcbcdddd". If the index is '8',
+    then the answer is 'd'. For '6' the answer is 'b'. But the catch,
+    is to find the index without decoding the string.
+
+    RUNTIME:
+    """
+
+    n = 0
+    pc = 0
+
+    for i in range(len(s)):
+        try:
+            v = int(s[i])
+            pc = pc + (n * v)
+            if pc <= index:
+                n = 0
+                continue
+        except:
+            n += 1
+            continue
+
+        m = s[(i-n):i]
+        return m[index%n]
