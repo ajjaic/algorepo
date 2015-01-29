@@ -126,9 +126,6 @@ def randomly_rotated_sorted_largest(l):
 
     mid = (llen-1)/2
 
-    midl = mid - 1
-    midr = mid + 1
-
     if l[mid] > l[-1]:
         return randomly_rotated_sorted_largest(l[mid:])
     else:
