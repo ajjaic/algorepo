@@ -292,3 +292,21 @@ def char_at_index_encoded_str(s, index):
 
         m = s[(i-n):i]
         return m[index%n]
+
+
+def combo(s, k):
+    def fn(ss, kk, pre, combos):
+        if not kk:
+            combos.append(pre)
+            return
+
+        lenss = len(ss)
+        for i in range(lenss-kk+1):
+            fn(ss[i+1:], kk-1, pre+ss[i], combos)
+
+        return combos
+
+    return fn(s, k, '', list())
+
+#import pudb; pu.db
+print combo("12345", 3)

@@ -158,6 +158,7 @@ class Test_Numerical:
         t = ' '.join(reversed(rnd_sen[:].split(' ')))
         assert space_delimited_sentence_rev_inplace(rnd_sen) == t
 
+    #TODO: Needs to be revised
     def test_char_at_index_encoded_str(self):
         r = (1,9)
         input_str = ''
@@ -173,7 +174,6 @@ class Test_Numerical:
 
         n = random.randrange(0, len(s))
         if not char_at_index_encoded_str(input_str, n) == s[n]:
-            import pudb; pu.db
             char_at_index_encoded_str(input_str, n)
 
 
