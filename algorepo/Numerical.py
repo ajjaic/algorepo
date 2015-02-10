@@ -268,6 +268,55 @@ def space_delimited_sentence_rev_inplace(st):
 def char_at_index_encoded_str(s, index):
     """
     Given an encoded string find the character at a certain index
+    without decoding it. For example if the string is "a2b1c3d4",
+    then the decoded string is "aabcccdddd". If the index is '8',
+    then the answer is 'd'. For '6' the answer is 'b'. But the catch,
+    is to find the index without decoding the string.
+
+    RUNTIME:
+    """
+
+    ti = 0
+    for i in filter(lambda x: x%2 != 0, range(len(s))):
+        ti += int(s[i])
+        if ti >= index:
+            return s[i-1]
+
+    return None
+
+def char_at_index_encoded_str_recursive_variation(s, index):
+    """
+    Given an encoded string find the character at a certain index
+    without decoding it. For example if the string is "a2bc3d4",
+    then the decoded string is "aabcbcbcdddd". If the index is '8',
+    then the answer is 'd'. For '6' the answer is 'b'. But the catch,
+    is to find the index without decoding the string.
+
+    RUNTIME:
+    """
+
+    def fn(r, prefix, total):
+
+        if not r:
+            return None
+
+        if r[0].isdigit():
+            total += (int(r[0]) * len(prefix))
+            if total > index:
+                i = index%(len(prefix))
+                return prefix[i]
+            prefix = ''
+        else:
+            prefix += r[0]
+
+        return fn(r[1:], prefix, total)
+
+    return fn(s, '', 0)
+
+
+def char_at_index_encoded_str_iteration_variation(s, index):
+    """
+    Given an encoded string find the character at a certain index
     without decoding it. For example if the string is "a2bc3d4",
     then the decoded string is "aabcbcbcdddd". If the index is '8',
     then the answer is 'd'. For '6' the answer is 'b'. But the catch,
@@ -285,14 +334,13 @@ def char_at_index_encoded_str(s, index):
             pc = pc + (n * v)
             if pc <= index:
                 n = 0
-                continue
         except:
             n += 1
-            continue
 
-        m = s[(i-n):i]
-        return m[index%n]
+    m = s[(i-n):i]
+    return m[index%n]
 
+print char_at_index_encoded_str_iteration_variation("a2bc3d4", 8)
 
 def combo(s, k):
     def fn(ss, kk, pre, combos):
@@ -307,6 +355,3 @@ def combo(s, k):
         return combos
 
     return fn(s, k, '', list())
-
-#import pudb; pu.db
-print combo("12345", 3)
