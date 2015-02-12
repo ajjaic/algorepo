@@ -25,6 +25,30 @@ def heapify(heap, hlen, cmpfn):
 
     return heap
 
+def max_heapify(arr, cmpfn):
+    arrl = len(arr)
+    halfwayi = (arrl/2) - 1
+
+    def sub_heapify(p):
+        while p <= halfwayi:
+            l = (2*p) + 1
+            r = (2*p) + 2
+
+            mxi = l if l < arrl and cmpfn(arr[l], arr[p]) == 1 else p
+            mxi = r if r < arrl and cmpfn(arr[r], arr[mxi]) == 1 else mxi
+
+            if p != mxi:
+                arr[p], arr[mxi] = arr[mxi], arr[p]
+                p = mxi
+            else:
+                break
+
+    for i in range(halfwayi, -1, -1):
+        sub_heapify(i)
+
+    return arr
+
+
 
 def heap_insert(heap, cmpfn, v):
     heap.append(v)
