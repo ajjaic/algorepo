@@ -355,3 +355,27 @@ def combo(s, k):
         return combos
 
     return fn(s, k, '', list())
+
+def numbo(numlist, num, size):
+
+    def helper(l, s, nl):
+        if not s:
+            return nl
+
+        for i in range(len(l)):
+            nl.append(l[i])
+            nl = helper(l[i+1:], s-1, nl)
+
+            if len(nl) == size and sum(nl) == num:
+                break
+            else:
+                nl = nl[:-1]
+
+        return nl
+
+
+    m = list()
+    helper(numlist, size, m)
+    return m
+
+
