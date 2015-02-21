@@ -220,14 +220,11 @@ def str_rev_recursive(s):
     """
     Reversing a string recursively. As long as 's' is not too long,
     this function will reverse a given string. If 's' is too long,
-    then this function might reach the maximum stack depth and crash.
+    then this function could reach the maximum stack depth and crash.
 
     RUNTIME:
     """
-    if len(s) == 1:
-        return s
-    else:
-        return str_rev_recursive(s[1:]) + s[0]
+    return '' if not s else (str_rev_recursive(s[1:]) + s[0])
 
 def str_rev_inplace(s, start, end):
     """
@@ -340,7 +337,6 @@ def char_at_index_encoded_str_iteration_variation(s, index):
     m = s[(i-n):i]
     return m[index%n]
 
-print char_at_index_encoded_str_iteration_variation("a2bc3d4", 8)
 
 def combo(s, k):
     def fn(ss, kk, pre, combos):
@@ -378,4 +374,37 @@ def numbo(numlist, num, size):
     helper(numlist, size, m)
     return m
 
+def palindrome(p):
 
+    b, e = 0, len(p)-1
+
+    while b <= e:
+        if p[b] != p[e]:
+            return False
+        b += 1
+        e -= 1
+
+    return True
+
+def palin_rec(p):
+    def help(p):
+        return '' if not p else (help(p[1:]) + p[0])
+    return p == help(p)
+
+def kadane(l):
+    max_till_here = 0
+    max_so_far = 0
+
+    m = list()
+    for i in l:
+        max_till_here += i
+        if max_till_here < 0:
+            m = list()
+            max_till_here = 0
+
+        if max_so_far < max_till_here:
+            max_so_far = max_till_here
+
+    return m, max_so_far
+
+print kadane([-2, 1, -3, 4, -1, 2, 1, -5, 4])
