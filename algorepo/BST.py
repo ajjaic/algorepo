@@ -192,6 +192,23 @@ class Bst(object):
         s.left = e
         return (s, e)
 
+    def getListAtEveryLevel(self):
+
+        def helper(t, ldict, d):
+            if t == None:
+                return ldict
+
+            l = ldict.get(d, list())
+            l.append(t.element)
+            ldict[d] = l
+
+            ldict = helper(t.left, ldict, d+1)
+            ldict = helper(t.right, ldict, d+1)
+
+            return ldict
+
+        return helper(self.root, dict(), 0)
+
     def getLevelOrder(self):
         l = list()
         m = [self.root]
@@ -239,13 +256,6 @@ def testing():
     s.insertElement(15)
     s.insertElement(12)
     s.insertElement(17)
-    (a, b) = s.getCircularLinkedList()
-
-    m = a
-    while True:
-        print a.element
-        a = a.right
-        if a == m:
-            break
+    print s.getListAtEveryLevel()
 
 testing()
