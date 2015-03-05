@@ -269,4 +269,76 @@ def kadane(l):
 
     return m, max_so_far
 
-print kadane([-2, 1, -3, 4, -1, 2, 1, -5, 4])
+def subseqtarget(la, t):
+    i = 0
+    lalen = len(la)
+
+    while i < lalen:
+        s = i+1
+        while s <= lalen:
+            numl = la[i:s]
+            ss = sum(numl)
+            if ss == t:
+                return numl
+            if ss > t:
+                break
+            s += 1
+
+        i += 1
+
+    return []
+
+def monies(coins, t):
+
+    def helper(l, m, cns):
+
+        for i, j in zip(cns, range(len(cns))):
+            suml = sum(l)
+            if suml == t:
+                m.append(l)
+                return l, m
+            elif suml > t:
+                return l, m
+            else:
+                l.append(i)
+                l, m = helper(l, m, cns[j:])
+                l = l[:-1]
+
+        return l, m
+
+    _, m = helper(list(), list(), coins)
+    return m
+
+
+def kth(l, k):
+
+    def helper(l, i, j):
+        l[k], l[j] = l[j], l[k]
+
+        lessthanp = 0
+        for m in range(j):
+            if l[m] < l[j]:
+                l[lessthanp], l[m] = l[m], l[lessthanp]
+                lessthanp += 1
+        l[lessthanp], l[j] = l[j], l[lessthanp]
+
+        return lessthanp
+
+    i = 0
+    j = len(l)-1
+    while True:
+        nk = helper(l, i, j)
+        if k == nk:
+            return l[k]
+        elif k < nk:
+            j = nk-1
+        else:
+            i = nk+1
+
+
+
+import random
+print kth(random.sample(range(10), 10), 5) #0 1 2 3 4 5 6 7 8 9
+print kth(random.sample(range(10), 10), 5) #0 1 2 3 4 5 6 7 8 9
+
+
