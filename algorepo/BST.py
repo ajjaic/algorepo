@@ -244,6 +244,21 @@ class Bst(object):
 
         return helper(self.root, list())
 
+    def getRandomNode(self):
+        from random import random
+
+        def helper(t):
+            if not t:
+                return 0, None
+
+            lp = helper(t.left)
+            rp = helper(t.right)
+            tp = random(), t
+
+            return max(tp, lp, rp)
+
+        return helper(self.root)[1].element
+
     def printTree(self, t):
         print self.__getTraverseOrder(t)
 
@@ -256,6 +271,15 @@ def testing():
     s.insertElement(15)
     s.insertElement(12)
     s.insertElement(17)
-    print s.getListAtEveryLevel()
+    md = dict()
+    for i in range(700):
+        temp = s.getRandomNode()
+        if md.has_key(temp):
+            md[temp] += 1
+        else:
+            md[temp] = 0
+
+    print md
+
 
 testing()
