@@ -336,9 +336,50 @@ def kth(l, k):
             i = nk+1
 
 
+def subsequences(s):
 
-import random
-print kth(random.sample(range(10), 10), 5) #0 1 2 3 4 5 6 7 8 9
-print kth(random.sample(range(10), 10), 5) #0 1 2 3 4 5 6 7 8 9
+    def helper(seq, size, l):
+
+        if len(seq) < size:
+            return l
+
+        subseq = seq[:size]
+        l.append(subseq)
+        l = helper(seq[1:], size, l)
+
+        return l
+
+    l = []
+    for size in range(1, len(s)):
+        l.extend(helper(s, size, list()))
+
+    return l
 
 
+def colorfulNumber(s):
+    s_dict = dict()
+    for num in subsequences(s):
+        if len(num) == 1:
+            product_s = int(num)
+        else:
+            product_s = reduce(lambda x, y: int(x) * int(y), num)
+
+        if s_dict.has_key(product_s):
+            return False
+        s_dict[product_s] = None
+    return True
+
+def pythonHash(s):
+    slen = len(s)
+    p = 0
+    x = long(ord(s[p])) << 7
+    while p < slen:
+        x = (1000003 * x) ^ long(ord(s[p]))
+        p += 1
+
+    x = x ^ slen
+    return x & (slen-1)
+
+print pythonHash("ajai")
+print pythonHash("a")
+print pythonHash("ab")
