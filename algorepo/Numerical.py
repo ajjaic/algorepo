@@ -369,7 +369,7 @@ def colorfulNumber(s):
         s_dict[product_s] = None
     return True
 
-def pythonHash(s):
+def python_hash(s):
     slen = len(s)
     p = 0
     x = long(ord(s[p])) << 7
@@ -380,6 +380,21 @@ def pythonHash(s):
     x = x ^ slen
     return x & (slen-1)
 
-print pythonHash("ajai")
-print pythonHash("a")
-print pythonHash("ab")
+def largest_differnece_between_pairs(seq):
+    def helper(n, m, a, b):
+        if a and b:
+            difference = (abs(a-b), (a, b))
+            m.append(difference)
+            return m
+
+        for i in range(len(n)):
+            if a:
+                m = helper(n[i+1:], m, a, n[i])
+            else:
+                m = helper(n[i+1:], m, n[i], None)
+                a = None
+
+        return m
+
+    difference_list = sorted(helper(seq, list(), None, None), reverse=True)
+    return difference_list, difference_list[0]
