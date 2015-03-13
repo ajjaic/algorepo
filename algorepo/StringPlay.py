@@ -135,3 +135,30 @@ def str_rev_inplace(s, start, end):
         s[start], s[end] = s[end], s[start]
         start += 1
         end -= 1
+
+
+def boyeer_moore_horspool(text, pattern):
+
+    bmt = dict()
+    length_pattern = len(pattern)
+    for i in range(length_pattern-1):
+        bmt[pattern[i]] = length_pattern - i - 1
+
+    bmt[pattern[-1]] = bmt.get(pattern[-1], length_pattern)
+
+    i = length_pattern - 1
+    txt_len = len(text)
+    while i < txt_len:
+        text_last_char = text[i]
+        text_last_char_index = i
+        for j in range(1, length_pattern+1):
+            if pattern[-j] == text[i]:
+                i = i - 1
+            else:
+                i = text_last_char_index + bmt.get(text_last_char, length_pattern)
+                break
+        else:
+            return i+1
+
+    return -1
+
