@@ -162,3 +162,21 @@ def boyeer_moore_horspool(text, pattern):
 
     return -1
 
+def string_is_lesser(str1, str2):
+
+    i = 0
+    str1len = len(str1)
+    str2len = len(str2)
+    while i < str1len and i < str2len:
+        if str1[i] < str2[i]:
+            return str1
+        elif str2[i] < str1[i]:
+            return str2
+        i = i + 1
+
+    if str1len < str2len:
+        return str1
+    elif str2len < str1len:
+        return str2
+    else:
+        return "EQUAL"
