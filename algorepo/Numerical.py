@@ -398,3 +398,56 @@ def largest_differnece_between_pairs(seq):
 
     difference_list = sorted(helper(seq, list(), None, None), reverse=True)
     return difference_list, difference_list[0]
+
+def lis_c(seq): #longest increasing sub-sequence
+
+    length_seq = len(seq)
+    if length_seq == 1:
+        return seq
+
+    subseq_till = [1] * length_seq
+
+    for i in range(1, length_seq):
+        for j in range(0, i):
+
+            if seq[i] > seq[j] and (subseq_till[j]+1) > subseq_till[i]:
+                subseq_till[i] = subseq_till[j]+1
+
+    return max(subseq_till)
+
+def lds_c(seq): #longest decreasing sub-sequence
+    length_seq = len(seq)
+    if length_seq == 1:
+        return seq
+
+    subseq_count_till = [1] * length_seq
+
+    for i in range(1, length_seq):
+        for j in range(i):
+            if seq[i] < seq[j] and (subseq_count_till[j]+1) > subseq_count_till[i]:
+                subseq_count_till[i] = subseq_count_till[j]+1
+
+    return max(subseq_count_till)
+
+
+def subseq_max_min(seq):
+    length_seq = len(seq)
+    if length_seq == 1:
+        return seq
+
+    subseq_count_till = [1] * length_seq
+
+    for i in range(1, length_seq):
+        s = seq[:i]
+        diff_max_min = max(s)-min(s)
+        for j in range(i):
+            if (diff_max_min == 0 or diff_max_min == 1) and (subseq_count_till[j]+1) > subseq_count_till[i]:
+                subseq_count_till[i] = subseq_count_till[j] + 1
+
+    return max(subseq_count_till)
+
+print subseq_max_min([ 2, 6, 7, 9, 1, 0, 1, 2, 3, 6 ])
+
+
+
+
