@@ -449,5 +449,22 @@ def subseq_max_min(seq):
 print subseq_max_min([ 2, 6, 7, 9, 1, 0, 1, 2, 3, 6 ])
 
 
+def combo(seq, count): #better optimized combo
+
+    def helper(n, c, limit, l='', m=list()):
+        if c == 0:
+            m.append(l)
+            return l, m
+
+        for i in range(limit):
+            l += n[i]
+            l, m = helper(n[i+1:], c-1, limit-i, l, m)
+            l = l[:-1]
+
+        return l, m
+
+    limit = (len(seq) - count) + 1
+    _, m = helper(seq, count, limit)
+    return m
 
 
