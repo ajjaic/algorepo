@@ -446,8 +446,6 @@ def subseq_max_min(seq):
 
     return max(subseq_count_till)
 
-print subseq_max_min([ 2, 6, 7, 9, 1, 0, 1, 2, 3, 6 ])
-
 
 def combo(seq, count): #better optimized combo
 
@@ -466,5 +464,54 @@ def combo(seq, count): #better optimized combo
     limit = (len(seq) - count) + 1
     _, m = helper(seq, count, limit)
     return m
+
+
+def intersect(s1, s2):
+    #intersection of a sequence that is also sorted
+    lens1 = len(s1)
+    lens2 = len(s2)
+    i = j = 0
+
+    common = list()
+    while (i < lens1) and (j < lens2):
+        if s1[i] < s2[j]:
+            i += 1
+        elif s1[i] > s2[j]:
+            j += 1
+        else:
+            common.append(s1[i])
+            i += 1
+            j += 1
+
+    return common
+
+def matrix_row_col_zero(mt):
+    #if there is a zero in any location of matrix
+    #make row and column of that location '0's
+
+    rowlen = len(mt)
+    collen = len(mt[0])
+
+    rowzeros = [False] * rowlen
+    colzeros = [False] * collen
+
+    for i in range(rowlen):
+        for j in range(collen):
+            if mt[i][j] == 0:
+                rowzeros[i] = True
+                colzeros[j] = True
+
+    if all(rowzeros):
+        return [[0 for _ in range(collen)] for _ in range(rowlen)]
+
+    if all(colzeros):
+        return [[0 for _ in range(collen)] for _ in range(rowlen)]
+
+    for i in range(rowlen):
+            for j in range(collen):
+                if rowzeros[i] or colzeros[j]:
+                    mt[i][j] = 0
+
+    return mt
 
 
