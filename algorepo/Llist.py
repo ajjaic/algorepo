@@ -126,6 +126,30 @@ class LinkedList(object):
         self.end.right = self.front
         return self
 
+    def singlyLinkedReverse(self):
+        #This function is just for demonstration.
+        #This code breaks the doubly linked list property
+        #Logic is correct. But cannot print it.
+
+        if self.isEmpty():
+            return
+
+        def helper(t):
+            if t.right == self.front:
+                return t, t
+
+            aftercurr, head = helper(t.right)
+
+            aftercurr.right = t
+            if self.front is t:
+                t.right = None
+            return t, head
+
+        _, head = helper(self.front)
+
+        self.front = head
+        return
+
     def reverseList(self):
 
         def helper(t):
@@ -181,6 +205,7 @@ class LinkedList(object):
         return list(reversed(l1[:i]))
 
     def customTail(self, n):
+        #Returns all the element from 'k' to end of list
 
         def helper(t, l):
             if t == self.front.right:
@@ -220,20 +245,22 @@ class LinkedList(object):
 
 def testing():
     l = LinkedList()
-    l.insertElement(1)
-    l.insertElement(2)
-    l.insertElement(3)
-    l.insertElement(4)
-    l.insertElement(5)
-    l.insertElement(6)
-    print l.customTail(3)
+    #l.insertElement(1)
+    #l.insertElement(2)
+    #l.insertElement(3)
+    #l.insertElement(4)
+    #l.insertElement(5)
+    #l.insertElement(6)
 
-    #m = LinkedList()
-    #m.insertElement(11)
-    #m.insertElement(21)
-    #m.insertElement(31)
-    #m.insertElement(4)
-    #m.insertElement(5)
-    #m.insertElement(6)
+    l.insertElement(7)
+    l.insertElement(1)
+    l.insertElement(6)
+
+    m = LinkedList()
+    m.insertElement(5)
+    m.insertElement(9)
+    m.insertElement(2)
+    print l.toList()
+    print m.toList()
 
 testing()
