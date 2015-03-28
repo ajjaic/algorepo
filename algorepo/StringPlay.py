@@ -180,3 +180,54 @@ def string_is_lesser(str1, str2):
         return str2
     else:
         return "EQUAL"
+
+
+def string_compress_a(s):
+    #recursive
+
+    length_s = len(s)
+    if length_s == 1:
+        return s+'1'
+
+    current_sym = s[0]
+    sym_count = 1
+    i = 1
+
+    while i < length_s and s[i] == current_sym:
+        sym_count += 1
+        i += 1
+
+    if i == length_s:
+        return current_sym + str(sym_count)
+    else:
+        return current_sym + str(sym_count) + string_compress_a(s[i:])
+
+
+def string_compress_b(s):
+    #iterative
+
+    length_s = len(s)
+
+    if length_s == 0:
+        return s
+
+    if length_s == 1:
+        return s+'1'
+
+    numchar = 1
+    compressed_str = list()
+    for i in range(1, length_s):
+        if s[i-1] == s[i]:
+            numchar += 1
+        else:
+            compressed_str.append(s[i-1]+str(numchar))
+            numchar = 1
+
+    else:
+        compressed_str.append(s[i-1]+str(numchar))
+
+    return ''.join(compressed_str)
+
+print string_compress_b ("aabcccccaaa")
+print string_compress_b("acccc")
+print string_compress_b("acccb")
