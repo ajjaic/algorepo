@@ -61,7 +61,7 @@ class Bst(object):
                 p.right = newnode
 
         self.nodecount += 1
-        return self
+        return newnode
 
     def isElementExists(self, element):
 
@@ -107,6 +107,7 @@ class Bst(object):
         return helper(self.root)
 
 
+    #TODO: This implemenation is totally wrong
     def isPerfectBinaryTree(self):
         if self.isEmpty():
             #TODO: better exception required
@@ -116,6 +117,8 @@ class Bst(object):
         if (2**h)-1 == self.nodecount:
             return True
         return False
+
+    #def isPerfectBinaryTree(self):
 
     def isCompleteBinaryTree(self):
         if self.isEmpty():
@@ -259,8 +262,34 @@ class Bst(object):
 
         return helper(self.root)[1].element
 
-    def printTree(self, t):
-        print self.__getTraverseOrder(t)
+    def nodeAncestors(self, n):
+
+        if self.isEmpty() or n is None:
+            return []
+
+        def helper(t, ancestors):
+            if t is None:
+                return False, ancestors
+
+            if t is n:
+                return True, ancestors
+
+            ancestors.append(t)
+            nodefound, ancestors = helper(t.left, ancestors)
+            if nodefound:
+                return True, ancestors
+            nodefound, ancestors = helper(t.right, ancestors)
+            if nodefound:
+                return True, ancestors
+            ancestors = ancestors[:-1]
+            return False, ancestors
+
+        _, ancestors = helper(self.root, list())
+        return ancestors
+
+
+    def printTree(self, traverse_order):
+        print self.__getTraverseOrder(traverse_order)
 
 def testing():
     s = Bst(cmp)
@@ -271,15 +300,6 @@ def testing():
     s.insertElement(15)
     s.insertElement(12)
     s.insertElement(17)
-    md = dict()
-    for i in range(700):
-        temp = s.getRandomNode()
-        if md.has_key(temp):
-            md[temp] += 1
-        else:
-            md[temp] = 0
-
-    print md
-
+    s.insertElement(14)
 
 testing()
