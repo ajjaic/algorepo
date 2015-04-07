@@ -231,3 +231,26 @@ def string_compress_b(s):
 print string_compress_b ("aabcccccaaa")
 print string_compress_b("acccc")
 print string_compress_b("acccb")
+
+def edit_distance(x, y):
+
+    lenX = len(x)
+    lenY = len(y)
+
+    table = [list(range(lenY+1))]
+    table.extend([[i] + ([0]*lenY) for i in range(1, lenX+1)])
+
+    for i in range(1, len(table)):
+        for j in range(1, len(table[i])):
+            if x[i-1] == y[j-1]:
+                cost = 0
+            else:
+                cost = 1
+
+            table[i][j] = min(table[i][j-1]+1, table[i-1][j]+1, table[i-1][j-1]+cost)
+
+    return table[i][j]
+
+#print edit_distance("cats", "cats")
+#print edit_distance("butter", "computer")
+
