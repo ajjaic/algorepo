@@ -212,6 +212,53 @@ class Bst(object):
 
         return helper(self.root, dict(), 0)
 
+    def getListAtEveryLevelGlobalDict(self):
+
+        def helper(t, l_dict, d):
+            if t == None:
+                return
+
+            helper(t.left, l_dict, d+1)
+            helper(t.right, l_dict, d+1)
+
+            temp = l_dict.get(d, list())
+            temp.append(t.element)
+            l_dict[d] = temp
+
+            return
+
+        k = dict()
+        helper(self.root, k, 0)
+        return k
+
+    def getListEveryLevelBFS(self):
+
+        l = [[self.root]]
+        i = 0
+
+        while True:
+            tmp = list()
+
+            for n in l[i]:
+                if n.left:
+                    tmp.append(n.left)
+                if n.right:
+                    tmp.append(n.right)
+
+            i += 1
+            if not tmp:
+                break
+            l.append(tmp)
+
+        m = list()
+        for i in l:
+            tmp = list()
+            for j in i:
+                tmp.append(j.element)
+            m.append(tmp)
+
+        return m
+
     def getLevelOrder(self):
         l = list()
         m = [self.root]
@@ -291,6 +338,80 @@ class Bst(object):
     def printTree(self, traverse_order):
         print self.__getTraverseOrder(traverse_order)
 
+
+    def isBinarySearchTree(self):
+
+        import sys
+        mx = sys.maxint
+        mn = -sys.maxint-1
+
+        def helper(t, mn, mx):
+
+            if t == None:
+                return True
+
+            if mn <= t.element and t.element < mx:
+                lt = helper(t.left, mn, t.element)
+                rt = helper(t.right, t.element, mx)
+            else:
+                return False
+
+            return lt and rt
+
+            #lt = True
+            #if mn <= t.element:
+                #lt = helper(t.left, mn, t.element)
+            #else:
+                #return False
+
+            #rt = True
+            #if t.element < mx:
+                #rt = helper(t.right, t.element, mx)
+            #else:
+                #return False
+
+            #return lt and rt
+
+        return helper(self.root, mn, mx)
+    #def isBinarySearchTree(self):
+        #def helper(t):
+            #lt = True
+            #if t.left:
+                #if t.element > t.left.element:
+                    #lt = helper(t.left)
+                #else:
+                    #lt = False
+
+            #rt = True
+            #if t.right:
+                #if t.element < t.right.element:
+                    #rt = helper(t.right)
+                #else:
+                    #rt = False
+
+            #return lt and rt
+
+        #return helper(self.root)
+
+    def isBalanced(self):
+
+        def helper(t):
+            if t is None:
+                return 0, True
+
+            left_height, left_isbalanced = helper(t.left)
+            if not left_isbalanced:
+                return None, False
+            right_height, right_isbalanced = helper(t.right)
+            if not right_isbalanced:
+                return None, False
+
+            return max(1+left_height, 1+right_height), abs(left_height-right_height) <= 1
+
+        _, b = helper(self.root)
+
+        return b
+
 def testing():
     s = Bst(cmp)
     s.insertElement(10)
@@ -301,5 +422,63 @@ def testing():
     s.insertElement(12)
     s.insertElement(17)
     s.insertElement(14)
+    s.insertElement(14.5)
+    import pudb; pu.db
+    print s.isBinarySearchTree()
 
 testing()
+
+#def binTreeMinHt(sl):
+    #def helper(s, e):
+        #t = (e-s)+1
+        #if t == 1:
+            #return Node(sl[s])
+        #if t == 2:
+            #pn = Node(sl[s])
+            #pn.right = Node(sl[e])
+            #return pn
+        #if t == 3:
+            #pn = Node(sl[s+1])
+            #pn.left = Node(sl[s])
+            #pn.right = Node(sl[e])
+            #return pn
+
+        #mid = s+(t/2)
+        #pn = Node(sl[mid])
+
+        #ls = s
+        #le = mid-1
+        #ln = helper(ls, le)
+        #pn.left = ln
+
+        #rs = mid+1
+        #re = e
+        #rn = helper(rs, re)
+        #pn.right = rn
+
+        #return pn
+
+    #return helper(0, len(sl)-1)
+
+
+#sl = list(range(1,65))
+#p = binTreeMinHt(sl)
+
+#def printT(p):
+    #if p == None:
+        #return
+
+    #printT(p.left)
+    #print p.element
+    #printT(p.right)
+
+#def height(p):
+    #if p == None:
+        #return 0
+
+    #l = 1 + height(p.left)
+    #r = 1 + height(p.right)
+    #return max(l, r)
+
+#print printT(p)
+#print height(p)
