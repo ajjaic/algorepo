@@ -126,30 +126,6 @@ class LinkedList(object):
         self.end.right = self.front
         return self
 
-    def singlyLinkedReverse(self):
-        #This function is just for demonstration.
-        #This code breaks the doubly linked list property
-        #Logic is correct. But cannot print it.
-
-        if self.isEmpty():
-            return
-
-        def helper(t):
-            if t.right == self.front:
-                return t, t
-
-            aftercurr, head = helper(t.right)
-
-            aftercurr.right = t
-            if self.front is t:
-                t.right = None
-            return t, head
-
-        _, head = helper(self.front)
-
-        self.front = head
-        return
-
     def reverseList(self):
 
         def helper(t):
@@ -243,24 +219,56 @@ class LinkedList(object):
         del ll
         return self
 
+    def getMiddleElement(self):
+        slow = self.front
+        fast = self.front
+
+        while fast is not self.end and fast.right is not self.end:
+            slow = slow.right
+            fast = fast.right.right
+
+        return slow
+
+    def isPalindrome(self):
+
+        slow = self.front
+        fast = self.front
+
+        stack = list()
+
+        while True:
+            stack.append(slow.element)
+            slow = slow.right
+            fast = fast.right.right
+
+            if fast is self.end:
+                slow = slow.right
+                break
+
+            if fast.right is self.end:
+                stack.append(slow.element)
+                slow = slow.right
+                break
+
+        while slow is not self.end.right:
+            if slow.element == stack[-1]:
+                stack.pop()
+                slow = slow.right
+            else:
+                return False
+
+        return True
+
 def testing():
     l = LinkedList()
-    #l.insertElement(1)
-    #l.insertElement(2)
-    #l.insertElement(3)
-    #l.insertElement(4)
-    #l.insertElement(5)
-    #l.insertElement(6)
-
-    l.insertElement(7)
     l.insertElement(1)
-    l.insertElement(6)
-
-    m = LinkedList()
-    m.insertElement(5)
-    m.insertElement(9)
-    m.insertElement(2)
-    print l.toList()
-    print m.toList()
+    l.insertElement(2)
+    l.insertElement(3)
+    l.insertElement(4)
+    l.insertElement(4)
+    l.insertElement(3)
+    l.insertElement(2)
+    l.insertElement(1)
+    print l.isPalindrome()
 
 testing()
