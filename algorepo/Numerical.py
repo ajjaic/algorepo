@@ -431,6 +431,7 @@ def lds_c(seq): #longest decreasing sub-sequence
 
 
 def subseq_max_min(seq):
+    #this could be a wrong implementation
     length_seq = len(seq)
     if length_seq == 1:
         return seq
