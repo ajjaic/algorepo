@@ -515,4 +515,21 @@ def matrix_row_col_zero(mt):
 
     return mt
 
+def kth_el(l, k):
+    p = len(l)/2
+    lp, rp = list(), list()
+
+    for i in l:
+        if i < l[p]:
+            lp.append(i)
+        if i > l[p]:
+            rp.append(i)
+
+    if (len(lp)+1) > k:
+        return kth_el(lp, k)
+    elif (len(lp)+1) < k:
+        return kth_el(rp, k-(len(lp)+1))
+
+    return l[p]
+
 
