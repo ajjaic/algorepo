@@ -1,6 +1,37 @@
 """
 Numerical algorithms and their implementation
 """
+class Irrational:
+    def __init__(self,first,second,third):
+        self.first = first
+        self.second = second
+        self.third = third
+    def __add__(self,other):
+        return Irrational(self.first + other.first, self.second + other.second, self.third)
+    def __mul__(self,other):
+        return Irrational(self.first*other.first + self.second*other.second*self.third, self.first*other.second + self.second*other.first,self.third)
+    def __str__(self):
+        print (self.first,self.second,self.third)
+    def pow(self,n):
+        out = Irrational(1,0,self.third)
+        for i in range(n):
+            out = out * self
+        return out
+
+
+def fib_recurrence(n):
+    """
+    This implementation of fibonacci algorithm uses
+    recurrence relations in mathematics.It works for any
+    value of n.  
+    
+    """
+
+    a = Irrational(1,1,5)
+    b = Irrational(1,-1,5)
+    c = a.pow(n)+(Irrational(-1,0,5)*(b.pow(n)))
+    return c.second/(2**n)
+
 
 def fib_memoized(n):
     """
